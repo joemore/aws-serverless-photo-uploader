@@ -1,0 +1,30 @@
+CognitoUserPool:
+  Type: AWS::Cognito::UserPool
+  Properties:
+    UserPoolName: ${self:custom.COGNITO_POOL}
+    UsernameAttributes:
+      - email
+    AutoVerifiedAttributes:
+      - email
+    Schema:
+      - Name: email
+        Required: true
+        Mutable: false
+      - AttributeDataType: String
+        Mutable: false
+        Name: region          
+      - AttributeDataType: String
+        Mutable: true
+        Name: memberType
+
+CognitoUserPoolClient:
+      Type: AWS::Cognito::UserPoolClient
+      Properties: 
+          ClientName: ${self:custom.COGNITO_POOL}-client
+          UserPoolId: !Ref CognitoUserPool
+          GenerateSecret: false
+          ExplicitAuthFlows:
+            - ALLOW_REFRESH_TOKEN_AUTH #Enable authflow to refresh tokens.
+            - ALLOW_USER_SRP_AUTH #Enable SRP-based authentication.
+            - ALLOW_CUSTOM_AUTH #Enable Lambda trigger based authentication.
+            - ALLOW_USER_PASSWORD_AUTH #Enable user password-based authentication. In this flow, Amazon Cognito receives the password in the request instead of using the SRP protocol to verify passwords.

@@ -1,0 +1,40 @@
+
+custom:
+  REGION: sa-east-1
+  IAM_PROFILE: ${env:YOUR_AWS_IAM_PROFILE}
+  SERVICE_NAME: hotdog-photo-uploader
+  DYNAMO_DB_TABLE: hotdog-photos
+  COGNITO_POOL: hotdog-users
+  S3_BUCKET: hotdog-photos-bucket
+
+
+service: ${self:custom.SERVICE_NAME}
+useDotenv: true
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  region: ${self:custom.REGION}
+  profile: ${self:custom.IAM_PROFILE}
+  runtime: nodejs14.x
+
+
+  iamRoleStatements:
+    - ${file(yaml/Dynamo_IAM.yml):Dynamo_IAM}
+    - ${file(yaml/S3_IAM.yml):S3_IAM}
+
+resources:
+  Resources:
+    DynamoDBTable: ${file(yaml/DynamoDB_Resource.yml):DynamoDB}
+    CognitoUserPool: ${file(yaml/Cognito_Resource.yml):CognitoUserPool}
+    CognitoUserPoolClient: ${file(yaml/Cognito_Resource.yml):CognitoUserPoolClient}
+
+  # Lets print out our outputs ready for our frontend
+  Outputs: 
+    UserPoolId:
+      Value:
+        Ref: CognitoUserPool
+    UserPoolClientId:
+      Value:
+        Ref: CognitoUserPoolClient
+
