@@ -6,6 +6,11 @@ Please note - this is part of an open source project written by me, Joe Gilmore 
 This works in conjunction with the NextJS Front end website  - you can find the backend code here
 [Frontend Repo](https://github.com/joemore/aws-serverless-photo-uploader-frontend-nextjs)
 
+## Prerequisites
+
+1. Run `npm install -g serverless` to install the serverless framework
+1. Run `yarn install` to install the dependencies
+
 ## Photo Uploader Backend
 
 Repo: [github.com/joemore/aws-serverless-photo-uploader](https://github.com/joemore/aws-serverless-photo-uploader)
