@@ -8,6 +8,5 @@ jspm_packages
 # Serverless directories
 .serverless
 
-.webpack/pinkmonkey-photo-uploader.zip
-.webpack/service/src/insertPhoto.js
-.webpack/service/src/insertPhoto.js.map
+.webpack/
+
