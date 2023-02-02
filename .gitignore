@@ -9,4 +9,5 @@ jspm_packages
 .serverless
 
 .webpack/
+.vscode/
 
