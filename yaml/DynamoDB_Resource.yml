@@ -4,21 +4,25 @@ DynamoDB:
     TableName: ${self:custom.DYNAMO_DB_TABLE}
     BillingMode: PAY_PER_REQUEST
     AttributeDefinitions:
+      - AttributeName: userId
+        AttributeType: S
       - AttributeName: id
-        AttributeType: S
-      - AttributeName: original_name
-        AttributeType: S
-      - AttributeName: creation_date
         AttributeType: S
     KeySchema:
-      - AttributeName: id
+      - AttributeName: userId
         KeyType: HASH
-    GlobalSecondaryIndexes:
-      - IndexName: nameAndDate
-        KeySchema:
-          - AttributeName: original_name
-            KeyType: HASH
-          - AttributeName: creation_date
-            KeyType: RANGE
-        Projection:
-          ProjectionType: ALL
+      - AttributeName: id
+        KeyType: RANGE
+    # GlobalSecondaryIndexes:
+    #   - IndexName: uploadStatusAndUserId
+    #     KeySchema:
+    #       - AttributeName: userId
+    #         KeyType: HASH
+    #       - AttributeName: uploadStatus
+    #         KeyType: RANGE
+    #     Projection:
+    #       ProjectionType: ALL
+    # For this demo we ae using a TTL so that our records expire after 1 day. 
+    TimeToLiveSpecification:
+      AttributeName: TimeToLive
+      Enabled: true

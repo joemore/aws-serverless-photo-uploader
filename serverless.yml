@@ -1,40 +1,106 @@
 
 custom:
-  REGION: sa-east-1
+  bundle: 
+    linting: false
+  REGION: ${env:REGION}
   IAM_PROFILE: ${env:YOUR_AWS_IAM_PROFILE}
-  SERVICE_NAME: hotdog-photo-uploader
-  DYNAMO_DB_TABLE: hotdog-photos
-  COGNITO_POOL: hotdog-users
-  S3_BUCKET: hotdog-photos-bucket
+  SERVICE_NAME: ${env:PREFIX}${env:SERVICE_NAME}
+  DYNAMO_DB_TABLE: ${env:PREFIX}${env:DYNAMO_DB_TABLE}
+  COGNITO_POOL: ${env:PREFIX}${env:COGNITO_POOL}
+  S3_BUCKET: ${env:PREFIX}${env:S3_BUCKET}
 
 
 service: ${self:custom.SERVICE_NAME}
 useDotenv: true
 frameworkVersion: '3'
 
+plugins:
+  - serverless-bundle 
+
 provider:
+  stage: dev
   name: aws
   region: ${self:custom.REGION}
   profile: ${self:custom.IAM_PROFILE}
-  runtime: nodejs14.x
+  runtime: nodejs12.x
+  # Exposed Env variables
+  environment:
+    PHOTOS_TABLE_NAME: ${self:custom.DYNAMO_DB_TABLE}
+    REGION: ${self:custom.REGION}
+    S3_BUCKET: ${self:custom.S3_BUCKET}
 
-
+  # IAM Access
   iamRoleStatements:
     - ${file(yaml/Dynamo_IAM.yml):Dynamo_IAM}
     - ${file(yaml/S3_IAM.yml):S3_IAM}
 
+# Our Resources that we want to use...
 resources:
   Resources:
     DynamoDBTable: ${file(yaml/DynamoDB_Resource.yml):DynamoDB}
     CognitoUserPool: ${file(yaml/Cognito_Resource.yml):CognitoUserPool}
     CognitoUserPoolClient: ${file(yaml/Cognito_Resource.yml):CognitoUserPoolClient}
+    S3Bucket: ${file(yaml/S3_Resource.yml):PhotosBucket} 
 
   # Lets print out our outputs ready for our frontend
   Outputs: 
     UserPoolId:
       Value:
         Ref: CognitoUserPool
+      Export:
+        Name: ${self:provider.stage}-UserPoolId
     UserPoolClientId:
       Value:
         Ref: CognitoUserPoolClient
+      Export:
+        Name: ${self:provider.stage}-UserPoolClientId
 
+functions:
+  # Insert Photo
+  insertPhoto: 
+    handler: src/insertPhoto.handler
+    events:
+      - http:
+          method: POST
+          path: /insert-photo
+          cors: true
+          authorizer:
+            name: Cognito
+            type: COGNITO_USER_POOLS
+            arn: !GetAtt CognitoUserPool.Arn
+  # Complete Photo - simply marks it as uploaded once front end confirms it has been done
+  completePhoto: 
+    handler: src/completePhoto.handler
+    events:
+      - http:
+          method: GET
+          path: /complete-photo/{id}
+          cors: true
+          authorizer:
+            name: Cognito
+            type: COGNITO_USER_POOLS
+            arn: !GetAtt CognitoUserPool.Arn
+  # Get Photos
+  getPhotos: 
+    handler: src/getPhotos.handler
+    events:
+      - http:
+          method: GET
+          path: /get-photos/
+          cors: true
+          authorizer:
+            name: Cognito
+            type: COGNITO_USER_POOLS
+            arn: !GetAtt CognitoUserPool.Arn
+  # Delete a photo
+  deletePhoto:
+    handler: src/deletePhoto.handler
+    events:
+      - http:
+          path: /delete-photo/{id}
+          method: delete
+          cors: true
+          authorizer:
+            name: Cognito
+            type: COGNITO_USER_POOLS
+            arn: !GetAtt CognitoUserPool.Arn

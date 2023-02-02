@@ -1,17 +1,38 @@
-AuctionsBucket:
+PhotosBucket:
   Type: AWS::S3::Bucket
   Properties:
-    BucketName: ${self:custom.AuctionsBucket.name}
-    LifecycleConfiguration:
-      Rules:
-        - Id: ExpirePictures
-          Status: Enabled
-          ExpirationInDays: 1
+    BucketName: ${self:custom.S3_BUCKET}
+    AccessControl: Private
+    # LifecycleConfiguration:
+    #   Rules:
+    #     - Id: ExpirePictures
+    #       Status: Enabled
+    #       ExpirationInDays: 1
+    CorsConfiguration:
+          CorsRules:
+            - AllowedHeaders:
+                - '*'
+              AllowedMethods:
+                - GET
+                - HEAD
+                - PUT
+                - POST
+                - DELETE
+              ExposedHeaders:
+                - ETag
+                - x-amz-server-side-encryption
+                - x-amz-request-id
+                - x-amz-id-2
+                - DELETE
+              AllowedOrigins:
+                - '*'
+              Id: myCORSRuleId1
+              MaxAge: 3600
 
-AuctionsBucketPolicy:
+PhotosBucketPolicy:
   Type: AWS::S3::BucketPolicy
   Properties:
-    Bucket: !Ref AuctionsBucket
+    Bucket: !Ref PhotosBucket
     PolicyDocument:
       Statement:
         - Sid: PublicRead
@@ -19,4 +40,4 @@ AuctionsBucketPolicy:
           Principal: '*'
           Action:
             - s3:GetObject
-          Resource: arn:aws:s3:::${self:custom.AuctionsBucket.name}/*
+          Resource: arn:aws:s3:::${self:custom.S3_BUCKET}/*

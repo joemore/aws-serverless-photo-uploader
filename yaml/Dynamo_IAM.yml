@@ -7,6 +7,10 @@ Dynamo_IAM:
     - dynamodb:DeleteItem
     - dynamodb:Query
     - dynamodb:Scan
+    - dynamodb:PartiQLSelect
+    - dynamodb:PartiQLInsert
+    - dynamodb:PartiQLUpdate
+    - dynamodb:PartiQLDelete
   Resource: 
-  - !GetAtt DynamoTable.Arn
-  - !Join ['/', [ !GetAtt DynamoTable.Arn, 'index', 'nameAndDate' ]]
+  - !GetAtt DynamoDBTable.Arn
+  # - !Join ['/', [ !GetAtt DynamoDBTable.Arn, 'index', 'uploadStatusAndUserId' ]]

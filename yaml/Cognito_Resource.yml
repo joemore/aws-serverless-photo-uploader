@@ -9,13 +9,24 @@ CognitoUserPool:
     Schema:
       - Name: email
         Required: true
-        Mutable: false
-      - AttributeDataType: String
-        Mutable: false
-        Name: region          
-      - AttributeDataType: String
+        Mutable: false      
+      - Name: picture
+        Required: true
         Mutable: true
-        Name: memberType
+      # Custom attributes - please note: Required custom attributes are not supported currently by AWS
+      - AttributeDataType: String
+        Mutable: false # User (or system) cannot change this once account has been created
+        Name: region #custom:region         
+      - AttributeDataType: String
+        Mutable: true # This CAN be changed after user creation
+        Name: memberType #custom:memberType
+    Policies:
+          PasswordPolicy: # Keeping the password policy fairly relaxed for now (You can actually change this at any time it turns out, even if you already have users)
+            MinimumLength: 8
+            RequireSymbols: false
+            RequireNumbers: false
+            RequireUppercase: false
+
 
 CognitoUserPoolClient:
       Type: AWS::Cognito::UserPoolClient
