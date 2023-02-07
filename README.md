@@ -13,7 +13,7 @@ This works in conjunction with the NextJS Front end website  - you can find the 
 
 ## Photo Uploader Backend
 
-Repo: [github.com/joemore/aws-serverless-photo-uploader](https://github.com/joemore/aws-serverless-photo-uploader)
+This Repo: [github.com/joemore/aws-serverless-photo-uploader](https://github.com/joemore/aws-serverless-photo-uploader)
 
 First, copy `.env.example` to `.env` and fill in the values
 

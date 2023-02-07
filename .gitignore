@@ -10,4 +10,4 @@ jspm_packages
 
 .webpack/
 .vscode/
-
+tsconfig.tsbuildinfo
