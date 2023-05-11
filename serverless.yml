@@ -54,6 +54,7 @@ resources:
         Ref: CognitoUserPoolClient
       Export:
         Name: ${self:provider.stage}-${self:custom.SERVICE_NAME}-UserPoolClientId
+      
 
 functions:
   # Insert Photo

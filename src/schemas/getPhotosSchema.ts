@@ -9,6 +9,7 @@ const getPhotosSchema = {
                     enum: ['PENDING','UPLOADING','COMPLETE'],
                     default: 'COMPLETE', //Uses this if nothing passed over
                 },
+                next: { type: 'string' }, // This is the NextToken for paginating through the results
             },
             required: ['uploadStatus'],
         },

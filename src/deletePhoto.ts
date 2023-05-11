@@ -3,14 +3,20 @@
 // BOTH:      sls deploy -f deletePhoto --verbose && sls logs -f deletePhoto  -t
 
 import validator from "@middy/validator";
-import AWS from "aws-sdk";
+
 import commonMiddleware, { ERROR_MESSAGE, SUCCESS_MESSAGE } from "./lib/commonMiddleware";
 import { getPhotoByID } from "./lib/dynamodb-utils";
 import { deleteS3File, getBucketName } from "./lib/s3-utils";
 import deletePhotoSchema from "./schemas/deletePhotoSchema";
 
 
-const dynamodb = new AWS.DynamoDB();
+// AWS (Now using V3 SDK)
+import { DynamoDBClient, ExecuteStatementCommand } from "@aws-sdk/client-dynamodb";
+import { DynamoDBDocumentClient } from "@aws-sdk/lib-dynamodb";
+const ddbClient = new DynamoDBClient({ region: process.env.REGION });
+const ddbDocClient = DynamoDBDocumentClient.from(ddbClient);
+
+
 const tableName = process.env.PHOTOS_TABLE_NAME;
 
 
@@ -31,7 +37,8 @@ async function deletePhoto( event ) {
     const Statement = `DELETE FROM "${tableName}" WHERE userId=? AND id=?`
     const Parameters = [{ S: sub }, { S: id }];
     const params = {Statement, Parameters};
-    await dynamodb.executeStatement(params).promise();
+    await ddbDocClient.send(new ExecuteStatementCommand(params));
+
 
     // Delete from S3
     const sizes = photo.sizes;

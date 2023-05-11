@@ -41,7 +41,6 @@ export const SUCCESS_MESSAGE = (
     object : any,
     statusCode : number = 200
 ) => {
-    // console.log('✅😝💪🏼',JSON.stringify(object,null,1))
     return {
         statusCode,
         headers: {
