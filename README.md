@@ -8,7 +8,7 @@ This works in conjunction with the NextJS Front end website  - you can find the 
 
 ## Prerequisites
 
-1. Run `npm install -g serverless` to install the serverless framework
+1. Run `yarn global add serverless` to install the serverless framework to your system
 1. Run `yarn install` to install the dependencies
 
 ## Photo Uploader Backend
@@ -19,7 +19,7 @@ First, copy `.env.example` to `.env` and fill in the values
 
 ```bash
 YOUR_AWS_IAM_PROFILE=XXXXXXXXXXX
-REGION=sa-east-1n
+REGION=us-east-1
 PREFIX=pinkmonkey-
 SERVICE_NAME=photo-uploader
 DYNAMO_DB_TABLE=photos
