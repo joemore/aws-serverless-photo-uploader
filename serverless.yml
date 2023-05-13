@@ -18,7 +18,7 @@ plugins:
   - serverless-bundle 
 
 provider:
-  stage: dev
+  stage: ${env:REGION}
   name: aws
   region: ${self:custom.REGION}
   profile: ${self:custom.IAM_PROFILE}

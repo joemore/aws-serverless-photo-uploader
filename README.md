@@ -22,6 +22,7 @@ YOUR_AWS_IAM_PROFILE=XXXXXXXXXXX
 REGION=us-east-1
 PREFIX=pinkmonkey-
 SERVICE_NAME=photo-uploader
+STAGE=dev
 DYNAMO_DB_TABLE=photos
 COGNITO_POOL=users
 S3_BUCKET=photos-bucket
@@ -37,14 +38,19 @@ Run the following commands to deploy the backend
 sls deploy
 ```
 
-Once your service has deployed, you need to copy the USER_POOL_ID, USER_POOL_CLIENT_ID and API Endpoint values. You will need these for the frontend.
-
-## Note about reading back Stack Values
-
-If you need to read back the values of your stack, you can do so by running the following command
+Once our stack has deployed, now run the following bash script:
 
 ```bash
-aws cloudformation --profile YOURPROFILE  --region us-east-1 describe-stacks --stack-name yourStackName --query "Stacks[0].Outputs" 
+bash echo-outputs.bash
+```
+
+This will output all required inputs for your frontend's Environment variables, for example
+
+```bash
+NEXT_PUBLIC_AWS_REGION=xx-xxxx-1
+NEXT_PUBLIC_AWS_USER_POOL_ID=xx-xxxx-1_123456789
+NEXT_PUBLIC_AWS_USER_POOL_WEB_CLIENT_ID=abdef0123456789012345
+NEXT_PUBLIC_AWSAPIENDPOINT=https://xxxxxxxx.execute-api.xx-xxxx-1.amazonaws.com/dev
 ```
 
 ## Photo Uploader Frontend
