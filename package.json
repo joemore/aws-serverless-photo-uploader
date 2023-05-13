@@ -1,6 +1,6 @@
 {
   "name": "aws-serverless-photo-uploader",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Joemore.com template for Serverless Photo Uploader",
   "author": "Joe Gilmore www.joemore.com",
   "license": "MIT",

@@ -82,3 +82,8 @@ import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
 ...although I do not like its not as clean as V2, it is a lot more efficient.
 
 2) I also updated the getPhotos function to make use of the NextToken - if one exists then we pass it back to our front end script, which in turn passes it back to the backend to get the next set of results. I've also set the Limit to 10 results at a time so that we can paginate through by clicking the "Load more" button - in a realworld example we would probably set this to 100 or more and also set it to load as the users gets to the bottom of the page.
+
+
+## Version 1.0.2 Update
+
+* Added `echo-outputs.bssh` script to output the required environment variables for the frontend
