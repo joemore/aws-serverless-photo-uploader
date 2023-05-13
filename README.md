@@ -34,7 +34,7 @@ Note about the PREFIX - this is optional, but if like me you have many AWS resou
 Run the following commands to deploy the backend
 
 ```bash
-sls deploy -s dev --verbose && bash echo-outputs.sh -s dev
+sls deploy -s dev && bash echo-outputs.sh -s dev
 ```
 
 Note: If you change the stage (-s flag) to say `prod` then it will deploy a separate stack with S3, DynamoDB and Cognito pool names all ending with -prod instead of -dev
@@ -59,7 +59,7 @@ Repo: [github.com/joemore/aws-serverless-photo-uploader-frontend-nextjs](https:/
 To remove the backend, run the following command (Not you may need to manually empty your buckets first!)
 
 ```bash
-sls remove --stage dev --verbose
+sls remove --stage dev
 ```
 
 
