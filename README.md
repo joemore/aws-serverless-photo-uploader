@@ -22,7 +22,6 @@ YOUR_AWS_IAM_PROFILE=XXXXXXXXXXX
 REGION=us-east-1
 PREFIX=pinkmonkey-
 SERVICE_NAME=photo-uploader
-STAGE=dev
 DYNAMO_DB_TABLE=photos
 COGNITO_POOL=users
 S3_BUCKET=photos-bucket
@@ -35,16 +34,12 @@ Note about the PREFIX - this is optional, but if like me you have many AWS resou
 Run the following commands to deploy the backend
 
 ```bash
-sls deploy
+sls deploy -s dev --verbose && bash echo-outputs.sh -s dev
 ```
 
-Once our stack has deployed, now run the following bash script:
+Note: If you change the stage (-s flag) to say `prod` then it will deploy a separate stack with S3, DynamoDB and Cognito pool names all ending with -prod instead of -dev
 
-```bash
-bash echo-outputs.bash
-```
-
-This will output all required inputs for your frontend's Environment variables, for example
+After deploying, the `bash echo-outputs.sh -s dev` script will output all required inputs for your frontend's Environment variables, for example
 
 ```bash
 NEXT_PUBLIC_AWS_REGION=xx-xxxx-1
@@ -53,11 +48,19 @@ NEXT_PUBLIC_AWS_USER_POOL_WEB_CLIENT_ID=abdef0123456789012345
 NEXT_PUBLIC_AWSAPIENDPOINT=https://xxxxxxxx.execute-api.xx-xxxx-1.amazonaws.com/dev
 ```
 
+You can copy this output and paste it into your frontend's `.env.local` file!
+
 ## Photo Uploader Frontend
 
 Repo: [github.com/joemore/aws-serverless-photo-uploader-frontend-nextjs](https://github.com/joemore/aws-serverless-photo-uploader-frontend-nextjs)
 
+## Removing the backend stack
 
+To remove the backend, run the following command (Not you may need to manually empty your buckets first!)
+
+```bash
+sls remove --stage dev --verbose
+```
 
 
 ## Version 1.0.1 Update
@@ -86,4 +89,5 @@ import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
 
 ## Version 1.0.2 Update
 
-* Added `echo-outputs.bssh` script to output the required environment variables for the frontend
+* Added `echo-outputs.sh` script to output the required environment variables for the frontend
+* Updated better stage management - now you can deploy to `dev` or `prod` and it will create a separate stack for each

@@ -1,13 +1,13 @@
-
 custom:
   bundle: 
     linting: false
   REGION: ${env:REGION}
+  STAGE: ${sls:stage} 
   IAM_PROFILE: ${env:YOUR_AWS_IAM_PROFILE}
   SERVICE_NAME: ${env:PREFIX}${env:SERVICE_NAME}
-  DYNAMO_DB_TABLE: ${env:PREFIX}${env:DYNAMO_DB_TABLE}
-  COGNITO_POOL: ${env:PREFIX}${env:COGNITO_POOL}
-  S3_BUCKET: ${env:PREFIX}${env:S3_BUCKET}
+  DYNAMO_DB_TABLE: ${env:PREFIX}${env:DYNAMO_DB_TABLE}-${self:custom.STAGE}
+  COGNITO_POOL: ${env:PREFIX}${env:COGNITO_POOL}-${self:custom.STAGE}
+  S3_BUCKET: ${env:PREFIX}${env:S3_BUCKET}-${self:custom.STAGE}
 
 
 service: ${self:custom.SERVICE_NAME}
@@ -18,7 +18,7 @@ plugins:
   - serverless-bundle 
 
 provider:
-  stage: ${env:REGION}
+  stage: ${self:custom.STAGE}
   name: aws
   region: ${self:custom.REGION}
   profile: ${self:custom.IAM_PROFILE}
