@@ -1,10 +1,24 @@
 # Photo Uploader Project
 
-Please note - this is part of an open source project written by me, Joe Gilmore - you can read the full details of this project here
+<img
+  src="https://cdn.3dnames.co/uploads/joemore.com/blogs/photo-uploader/photo-uploader-infrastructure-2-md.webp"
+  alt="AWS Overview"
+  title="AWS Overview"
+  style="display: block; margin: 0 auto; max-width: 250px; border-radius:20px">
+
+Please note - this is part of an open source, full stack project - you can read the full details of this project here
 [joemore.com/photo-uploader-with-aws-serverless-nextjs-and-tailwind/](https://www.joemore.com/photo-uploader-with-aws-serverless-nextjs-and-tailwind/)
 
 This works in conjunction with the NextJS Front end website  - you can find the backend code here
 [Frontend Repo](https://github.com/joemore/aws-serverless-photo-uploader-frontend-nextjs)
+
+Here is an overview of what this backend script spins up:
+
+<img
+  src="https://cdn.3dnames.co/uploads/joemore.com/blogs/photo-uploader/aws-architecture-lg.webp"
+  alt="AWS Overview"
+  title="AWS Overview"
+  style="display: block; margin: 0 auto; max-width: 640px; border-radius:20px">
 
 ## Prerequisites
 
