@@ -1,4 +1,4 @@
-# Photo Uploader Project
+# Photo Uploader Project (Backend)
 
 <img
   src="https://cdn.3dnames.co/uploads/joemore.com/blogs/photo-uploader/photo-uploader-infrastructure-2-md.webp"
