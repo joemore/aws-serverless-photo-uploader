@@ -3,7 +3,7 @@
 
 
 <p align="center">
-  <img src="https://cdn.3dnames.co/uploads/joemore.com/blogs/photo-uploader/photo-uploader-infrastructure-2-md.webp" width="350" title="hover text">
+  <img src="https://cdn.3dnames.co/uploads/joemore.com/blogs/photo-uploader/photo-uploader-infrastructure-2-md.webp" width="350" title="Pink Monkey Photo Uploader">
 </p>
 
 Please note - this is part of an open source, full stack project - you can read the full details of this project here
@@ -15,7 +15,7 @@ This works in conjunction with the NextJS Front end website  - you can find the 
 Here is an overview of what this backend script spins up:
 
 <p align="center">
-  <img src="https://cdn.3dnames.co/uploads/joemore.com/blogs/photo-uploader/aws-architecture-lg.webp" width="500" title="hover text">
+  <img src="https://cdn.3dnames.co/uploads/joemore.com/blogs/photo-uploader/aws-architecture-lg.webp" width="500" title="AWS Overview">
 </p>
 
 ## Prerequisites
