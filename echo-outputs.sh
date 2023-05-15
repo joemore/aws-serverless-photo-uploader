@@ -22,7 +22,7 @@ service_name=$(grep -i "^SERVICE_NAME=" "$envFile" | cut -d "=" -f 2)
 stack_name="$prefix$service_name-$stage"
 
 # Get stack outputs
-outputs=$(aws cloudformation --profile $profile describe-stacks --stack-name $stack_name --query "Stacks[0].Outputs")
+outputs=$(aws cloudformation --profile $profile --region $region describe-stacks --stack-name $stack_name --query "Stacks[0].Outputs")
 
 # Extract specific output values
 userPoolId=$(echo "$outputs" | jq -r '.[] | select(.OutputKey=="UserPoolId") | .OutputValue')
