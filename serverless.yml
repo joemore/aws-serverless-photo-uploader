@@ -22,7 +22,7 @@ provider:
   name: aws
   region: ${self:custom.REGION}
   profile: ${self:custom.IAM_PROFILE}
-  runtime: nodejs12.x
+  runtime: nodejs18.x
   # Exposed Env variables
   environment:
     PHOTOS_TABLE_NAME: ${self:custom.DYNAMO_DB_TABLE}
