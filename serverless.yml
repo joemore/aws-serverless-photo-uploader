@@ -55,53 +55,6 @@ resources:
       Export:
         Name: ${self:provider.stage}-${self:custom.SERVICE_NAME}-UserPoolClientId
       
-
+# Our functions...
 functions:
-  # Insert Photo
-  insertPhoto: 
-    handler: src/insertPhoto.handler
-    events:
-      - http:
-          method: POST
-          path: /insert-photo
-          cors: true
-          authorizer:
-            name: Cognito
-            type: COGNITO_USER_POOLS
-            arn: !GetAtt CognitoUserPool.Arn
-  # Complete Photo - simply marks it as uploaded once front end confirms it has been done
-  completePhoto: 
-    handler: src/completePhoto.handler
-    events:
-      - http:
-          method: GET
-          path: /complete-photo/{id}
-          cors: true
-          authorizer:
-            name: Cognito
-            type: COGNITO_USER_POOLS
-            arn: !GetAtt CognitoUserPool.Arn
-  # Get Photos
-  getPhotos: 
-    handler: src/getPhotos.handler
-    events:
-      - http:
-          method: GET
-          path: /get-photos/
-          cors: true
-          authorizer:
-            name: Cognito
-            type: COGNITO_USER_POOLS
-            arn: !GetAtt CognitoUserPool.Arn
-  # Delete a photo
-  deletePhoto:
-    handler: src/deletePhoto.handler
-    events:
-      - http:
-          path: /delete-photo/{id}
-          method: delete
-          cors: true
-          authorizer:
-            name: Cognito
-            type: COGNITO_USER_POOLS
-            arn: !GetAtt CognitoUserPool.Arn
+  - ${file(yaml/Functions.yml)}
